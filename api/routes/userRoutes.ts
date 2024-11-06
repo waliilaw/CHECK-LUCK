@@ -1,42 +1,32 @@
-import express from 'express'
-const app = express()
+import express, { Request, Response } from 'express';
+import { createReadStream } from 'fs';
 
-app.use(express.json())
+const app = express();
 
+const cards: string[] = [
 
-app.post('/user', (req, res) => {
-    const {username} = req.body
-    res.send(`Welcome ${username}`)
-    
-let userExists = false 
+];
 
-    for(let i = 0; i < users.length; i++){
-        if(users[i].username === username){
-            userExists = true
-            break;
-        }
-    }
+const hasherBoy = (username: string): number => {
+  const hash = username.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  return hash % cards.length;
+};
 
-    if(userExists(username)){
-        res.send({ message: `Welcome Senpai ${username}`})
-    }
-    
-    else{// guys creating new user because user does not exist
+const router = express.Router();
 
-        const userArray = [{username}  , assignedCard ]
+router.post('/user', (req: Request, res: Response) => {
+  const { username }: { username: string } = req.body;
 
-        const cards = []
+  if (!username) {
+    return res.status(400).send({ message: 'Username is required' });
+  }
 
-        const randomIndex = Math.floor(Math.random() * cards.length)
-        const assignedCard = cards[randomIndex]
+  const cardsIndex = hasherBoy(username);
+  const assignedCard = cards[cardsIndex];
 
+  res.send({
+    message: `Senpai ${username}, your card is ${assignedCard}`,
+  });
+});
 
-
-        cards.push({ username , image : assignedCard })
-        res.send({ message: `Welcome ${username}`, image: assignedCard });
-}
-    }
-
-
-
-})
+export default router;
