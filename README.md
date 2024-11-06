@@ -9,11 +9,13 @@ A simple app that assigns a unique "luck card" to each user based on their Twitt
 - A unique card is assigned using a hash function.
 - No database required, card assignment is consistent.
 
-## Technologies
+## Techs Used 
 - Express
 - TypeScript
-- Node.js
-
+- Tailwind
+- Javascript
+- React
+  
 ## Setup
 1. Clone the repo
 2. Run `npm install`
