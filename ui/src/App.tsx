@@ -9,24 +9,22 @@ function App(){
   const [message , setMessage ]= useState('')
 
 
-  const Submithandler = () => {
-    axios.post('http://localhost:5000/user' , {username : userName})
-    .then((res) => {
-      console.log(res.data)
-      setImages(res.data.image)
-      setLoading(false)
-      setMessage(res.data.message)
-    })
-   
-  }
-
+  const SubmitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:5000/user', { username });
+      setMessage(response.data.message);
+      setImage(response.data.image);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 return(<>
 
-<form onSubmit = {Submithandler}
+<form onSubmit = {SubmitHandler}>
 <input type="text" />
-
 <button type='submit'>Lessss Goooooo</button>
-/>
-</>)}
-
+</form>
+</>)
+}
 export default App
